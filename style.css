@@ -1,0 +1,34 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.container{
+    padding: 2%;
+    z-index: 1;
+}
+.findBtn{
+}
+main{
+    padding: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.movie{
+    border: 1px solid #000;
+    width: 25%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 1%;
+}
+.details{
+    justify-content: space-between;
+    display: flex;
+}
+.picture{
+    background-size: cover;
+    background-position: center;
+    width: 95%;
+    height: 150px;
+}

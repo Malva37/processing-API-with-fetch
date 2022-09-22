@@ -113,3 +113,17 @@ font-size: 26px;
 font-size: 14px;
 color: lightgray;
 }
+footer{
+    display: none;
+    justify-content: space-around;
+    width: 20%;
+    position: revert;
+    bottom: 5%;
+    /* left: 48%;
+    text-align: center; */
+margin: 3% auto;  
+}
+.currentPage{
+    font-weight: bold;
+    font-size: 18px;
+}

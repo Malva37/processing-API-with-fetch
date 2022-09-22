@@ -1,7 +1,9 @@
 let getSel = sel => document.querySelector(sel);
+let pageCurrent;
+let title;
 
-function findMovie(title) {
-    let url = `http://www.omdbapi.com/?i=tt3896198&apikey=75e59b65&s=${title}`
+function findMovies(title) {
+    let url = `http://www.omdbapi.com/?i=tt3896198&apikey=75e59b65&s=${title}`;
     return fetch(url)
         .then(response => {
             if (response.ok) {
@@ -16,6 +18,8 @@ function findMovie(title) {
             }
         })
         .then(data => {
+            getSel('footer').style.display = 'flex';
+            getSel('.currentPage').textContent = currentPage;
             let newBox;
             let buttonsMoreDetails = [];
             for (let i = 0; i < data.Search.length; i++) {
@@ -38,10 +42,10 @@ function findMovie(title) {
                 picture.style.backgroundImage = `url(${element.Poster})`;
                 picture.classList.add('picture');
                 idMovie.textContent = element.imdbID;
-                title.textContent= element.Title;
-                type.textContent= element.Type;
-                year.textContent= element.Year;
-                newBox.append(picture, title,  type, year, moreDetails, idMovie);
+                title.textContent = element.Title;
+                type.textContent = element.Type;
+                year.textContent = element.Year;
+                newBox.append(picture, title, type, year, moreDetails, idMovie);
                 getSel('main').appendChild(newBox);
             }
 
@@ -90,9 +94,70 @@ function showMovie(id) {
         })
 }
 getSel('.findBtn').onclick = () => {
-    let title = getSel('.findMovie').value;
-    findMovie(title);
+ title = getSel('.findMovie').value;
+ currentPage = 1;
+    findMovies(title);
+    return title, currentPage;
 }
 getSel('.modal').onclick = () => {
     getSel('.modal').style.display = 'none';
+}
+
+getSel('.next').onclick = () => {
+   let page =  ++currentPage;   // page = 2
+   let prevPage = --page;
+   let nextPage = ++currentPage;
+   getSel('.currentPage').textContent = --currentPage; //2
+   getSel('.nextPage').textContent=nextPage; // 3
+console.log(page);
+console.log(currentPage);
+
+   getSel('.prevPage').textContent= prevPage; //1
+   if(currentPage>2){
+       getSel('.prevPage').textContent= --currentPage;
+   } else if(currentPage ==1){
+    getSel('.prevPage').textContent= '';
+
+   }
+    turnPage(currentPage);
+}
+getSel('.prev').onclick = () => {
+    let page;
+    if(currentPage >1){        //   <  prev  curr 2 curr  next  >
+        page = --currentPage;
+        getSel('.nextPage').textContent= --currentPage;
+        getSel('.prevPage').textContent= --currentPage;
+        getSel('.currentPage').textContent= currentPage;
+        turnPage(page);
+    }
+    // else if(currentPage ==1){
+    //     getSel('.prevPage').textContent= '';
+    //     // getSel('.nextPage').textContent= --currentPage;
+
+    // } 
+    else{
+        return
+    }
+  
+ }
+
+function turnPage(page) {
+    console.log(page);
+    let url = `http://www.omdbapi.com/?i=tt3896198&apikey=75e59b65&s=${title}&page=${page}`;
+
+    return fetch(url)
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                return response.json()
+                    .then(error => {
+                        const e = new Error('wrong')
+                        e.data = error;
+                        throw e
+                    })
+            }
+        })
+        .then(data =>
+            console.log(data))
 }

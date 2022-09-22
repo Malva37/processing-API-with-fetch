@@ -1,28 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
-            <input type="text" class="findMovie" placeholder="type a movie...">
+            <input type="text" class="findMovie form-control" placeholder="type a movie...">
             <button class="findBtn btn btn-success">Search</button>
 
         </header>
         <main>
-            <div class="movie">
-    
-            </div>
+            <!-- <div class="movie">
+                <div class="picture"></div>
+                <div class="title"></div>
+           <div class="type"></div>
+           <div class="year"></div>
+
+            </div> -->
         </main>
-    <div class="modal"></div>
+        <div class="modal">
+            <div class="modalBody">
+                <div class="modalPoster">
+                    <img src="" alt="">
+                </div>
+                
+                <div class="modalInformation">
+                    <div class="modalTitle"></div>
+                    <div class="modalGenre"></div>
+                    <div class="modalDescription"></div>
+                    <div class="modalWriter"></div>
+                    <div class="modalDirector"></div>
+                    <div class="modalActors"></div>
+                    <div class="modalBoxOffice"></div>
+                    <div class="modalAwards"></div>
+                    
+                    <div class="modalRatings"></div>
+
+                </div>
+            </div>
+        </div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
+
 </html>

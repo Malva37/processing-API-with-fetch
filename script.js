@@ -104,22 +104,22 @@ getSel('.modal').onclick = () => {
 }
 
 getSel('.next').onclick = () => {
-   let page =  ++currentPage;   // page = 2
-   let prevPage = --page;
-   let nextPage = ++currentPage;
-   getSel('.currentPage').textContent = --currentPage; //2
-   getSel('.nextPage').textContent=nextPage; // 3
-console.log(page);
-console.log(currentPage);
-
-   getSel('.prevPage').textContent= prevPage; //1
-   if(currentPage>2){
-       getSel('.prevPage').textContent= --currentPage;
-   } else if(currentPage ==1){
+   let page = currentPage; 
+   ++page; //  <  prev  curr 2 curr  next  >
+   let prevPage = currentPage;
+   let nextPage = page;
+   ++nextPage;
+   getSel('.currentPage').textContent = page; 
+   getSel('.nextPage').textContent=nextPage; 
+   if(page>1){
+       getSel('.prevPage').textContent= prevPage;
+   } 
+   else if(page == 1){
     getSel('.prevPage').textContent= '';
-
    }
-    turnPage(currentPage);
+    turnPage(page);
+    currentPage = page;
+    return currentPage;
 }
 getSel('.prev').onclick = () => {
     let page;

@@ -2,8 +2,9 @@ let getSel = sel => document.querySelector(sel);
 let pageCurrent;
 let title;
 
-function findMovies(title) {
-    let url = `http://www.omdbapi.com/?i=tt3896198&apikey=75e59b65&s=${title}`;
+function findMovies(title, page) {
+    getSel('main').innerHTML = '';
+    let url = `http://www.omdbapi.com/?i=tt3896198&apikey=75e59b65&s=${title}&page=${page}`;
     return fetch(url)
         .then(response => {
             if (response.ok) {
@@ -59,7 +60,10 @@ function findMovies(title) {
             }
         })
 }
-
+//       catch that ERROR during event press button <More Datails>
+// Uncaught TypeError: Cannot set properties of null (setting 'innerHTML')
+//  at showMovie (script.js:66:39)
+// at element.onclick (script.js:57:21)
 function showMovie(id) {
     let url = `http://www.omdbapi.com/?i=${id}&apikey=75e59b65`;
     getSel('.modalRatings').innerHTML = '<b>Ratings:</b>';
@@ -94,9 +98,9 @@ function showMovie(id) {
         })
 }
 getSel('.findBtn').onclick = () => {
- title = getSel('.findMovie').value;
- currentPage = 1;
-    findMovies(title);
+    title = getSel('.findMovie').value;
+    currentPage = 1;
+    findMovies(title, currentPage);
     return title, currentPage;
 }
 getSel('.modal').onclick = () => {
@@ -104,60 +108,40 @@ getSel('.modal').onclick = () => {
 }
 
 getSel('.next').onclick = () => {
-   let page = currentPage; 
-   ++page; //  <  prev  curr 2 curr  next  >
-   let prevPage = currentPage;
-   let nextPage = page;
-   ++nextPage;
-   getSel('.currentPage').textContent = page; 
-   getSel('.nextPage').textContent=nextPage; 
-   if(page>1){
-       getSel('.prevPage').textContent= prevPage;
-   } 
-   else if(page == 1){
-    getSel('.prevPage').textContent= '';
-   }
-    turnPage(page);
+    let page = currentPage;
+    ++page; //  <  prev  curr 2 curr  next  >
+    let prevPage = currentPage;
+    let nextPage = page;
+    ++nextPage;
+    getSel('.currentPage').textContent = page;
+    getSel('.nextPage').textContent = nextPage;
+    if (page > 1) {
+        getSel('.prevPage').textContent = prevPage;
+    } else if (page == 1) {
+        getSel('.prevPage').textContent = '';
+    }
+    findMovies(title, page)
     currentPage = page;
     return currentPage;
 }
-getSel('.prev').onclick = () => {
-    let page;
-    if(currentPage >1){        //   <  prev  curr 2 curr  next  >
-        page = --currentPage;
-        getSel('.nextPage').textContent= --currentPage;
-        getSel('.prevPage').textContent= --currentPage;
-        getSel('.currentPage').textContent= currentPage;
-        turnPage(page);
-    }
-    // else if(currentPage ==1){
-    //     getSel('.prevPage').textContent= '';
-    //     // getSel('.nextPage').textContent= --currentPage;
 
-    // } 
-    else{
+
+getSel('.prev').onclick = () => {
+    let nextPage = currentPage; //3
+    let page = --currentPage;
+    getSel('.currentPage').textContent = page;
+    getSel('.nextPage').textContent = nextPage;
+    let prevPage = --page; //1
+    getSel('.prevPage').textContent = prevPage;
+    page = ++page;
+    if (page > 1) { //   <  prev  curr 2 curr  next  >
+        findMovies(title, page)
+        // .then(data=>console.log(data))
+    } else if (page == 1) {
+        getSel('.prevPage').textContent = '';
+        findMovies(title, page)
+    } else {
         return
     }
-  
- }
 
-function turnPage(page) {
-    console.log(page);
-    let url = `http://www.omdbapi.com/?i=tt3896198&apikey=75e59b65&s=${title}&page=${page}`;
-
-    return fetch(url)
-        .then(response => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                return response.json()
-                    .then(error => {
-                        const e = new Error('wrong')
-                        e.data = error;
-                        throw e
-                    })
-            }
-        })
-        .then(data =>
-            console.log(data))
 }
